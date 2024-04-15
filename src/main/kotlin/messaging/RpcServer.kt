@@ -23,6 +23,7 @@ class RpcServer {
     val channel = connection.createChannel()
 
     channel.queueDeclare(RPC_QUEUE_NAME, false, false, false, null)
+    // 서버가 시작될 때 이전에 남아있을 수 있는 메시지를 모두 지운다.
     channel.queuePurge(RPC_QUEUE_NAME)
 
     //다수의 서버에 요청을 분산하기 위해 prefetchCount를 1로 설정한다.
