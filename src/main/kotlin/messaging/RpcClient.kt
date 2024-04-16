@@ -28,6 +28,9 @@ class RpcClient: AutoCloseable {
     val corrId: String = UUID.randomUUID().toString()
 
     // 응답을 받기 위한 독자적 큐를 생성한다.
+    // 현재 클라이언트에서 응답을 받는 큐이므로 익명으로 생성.
+    // server-named, exclusive, autodelete, non-durable queue 이므로 클라이언트가 죽으면 큐가 삭제된다.
+    // 요청을 보낸 후 죽으면 응답을 어떻게 받아야 할까?
     val replyQueueName = channel.queueDeclare().queue
 
     val props = AMQP.BasicProperties.Builder()
